@@ -114,6 +114,27 @@ function gameOver() {
 async function streamLevel(week) {
     let args;
     let codeLine;
+    function checkForLevelInstruction() {
+        if (typeof args != undefined && typeof codeLine != undefined) {
+            document.getElementById("instruction").innerText = codeLine;
+            if (args[0] == "h") {
+                if (snaOldKey == snaCurrentKey && snaCurrentKey == args[1]) {
+                    //do nothing for now...
+            } else {
+                gameOver();
+                break;
+            }
+            } else if (args[0] == "wait" || args[0] == "sleep") {
+                await new Promise(r => setTimeout(r, Number(args[1]) * 1000));
+            } else if (args[0] == "v") {
+                var audV = new Audio(`${getAudio(true)}`);
+                audV.addEventListener("canplay", evt => { audV.play(); }); 
+                document.getElementById('villain').setAttribute("src", `${getPose(true)}`)
+            } else {
+                console.log(`UNKNOWN COMMAND ${codeLine}`)
+            }
+        }
+    }
     fetch(`levels/${week}`)
     .then(response => response.text())
         .then(lines => {
@@ -125,29 +146,11 @@ async function streamLevel(week) {
                 codeLine = String.prototype.toLowerCase(lines.substring(i,j))
                 console.log(codeLine)
                 args = codeLine.split(":")
+                setTimeout(console.log("time up lol"), 1000)
+                checkForLevelInstruction();
             }
+            
     });
-    while (typeof args != undefined && typeof codeLine != undefined) {
-        document.getElementById("instruction").innerText = codeLine;
-        await new Promise(r => setTimeout(r, getRandomNumber(500,1000)));
-        if (args[0] == "h") {
-            if (snaOldKey == snaCurrentKey && snaCurrentKey == args[1]) {
-                //do nothing for now...
-            } else {
-                gameOver();
-                break;
-            }
-        } else if (args[0] == "wait" || args[0] == "sleep") {
-            await new Promise(r => setTimeout(r, Number(args[1]) * 1000));
-        } else if (args[0] == "v") {
-            var audV = new Audio(`${getAudio(true)}`);
-            audV.addEventListener("canplay", evt => { audV.play(); }); 
-            document.getElementById('villain').setAttribute("src", `${getPose(true)}`)
-        } else {
-            console.log(`UNKNOWN COMMAND ${codeLine}`)
-        }
-        await new Promise(r => setTimeout(r, 100));
-    }
 }
 
 streamLevel(getWeek());
