@@ -109,6 +109,9 @@ document.getElementById('hero').setAttribute("src", `hero/0.png`)
 
 function gameOver() {
     console.log("Game Over")
+    while (true) {
+        document.getElementById("instruction").innerText = "Game Over"
+    }
 }
 
 async function streamLevel(week) {
@@ -122,7 +125,6 @@ async function streamLevel(week) {
                     //do nothing for now...
             } else {
                 gameOver();
-                break;
             }
             } else if (args[0] == "wait" || args[0] == "sleep") {
                 await new Promise(r => setTimeout(r, Number(args[1]) * 1000));
