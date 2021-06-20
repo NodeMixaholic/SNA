@@ -112,8 +112,8 @@ function gameOver() {
 }
 
 async function streamLevel(week) {
-    var args;
-    var codeLine;
+    let args;
+    let codeLine;
     fetch(`levels/${week}`)
     .then(response => response.text())
         .then(lines => {
@@ -122,7 +122,7 @@ async function streamLevel(week) {
             let j = 0;
             while ((j = lines.indexOf(char, i)) !== -1) {
                 console.log(lines[i])
-                codeLine = String.prototype.toLowerCase(input.substring(i,j))
+                codeLine = String.prototype.toLowerCase(lines.substring(i,j))
                 console.log(codeLine)
                 args = codeLine.split(":")
             }
