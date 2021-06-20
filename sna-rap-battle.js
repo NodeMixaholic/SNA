@@ -110,7 +110,7 @@ document.getElementById('hero').setAttribute("src", `hero/0.png`)
 async function streamLevel(week) {
     let args;
     let codeLine;
-    fetch(week)
+    fetch(`levels/${week}`)
     .then(response => response.text())
         .then(lines => {
             for(var i = 0;i < lines.length;i++) {
