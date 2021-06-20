@@ -107,21 +107,29 @@ document.body.style.backgroundImage = `url('week-bgs/${getWeek()}.jpg')`
 document.getElementById('villain').setAttribute("src", `villains/${getVillain(getWeek())}/0.png`)
 document.getElementById('hero').setAttribute("src", `hero/0.png`)
 
+function gameOver() {
+    console.log("Game Over")
+}
+
 async function streamLevel(week) {
     let args;
     let codeLine;
     fetch(`levels/${week}`)
     .then(response => response.text())
         .then(lines => {
-            for(var i = 0;i < lines.length;i++) {
+            let char = '\n';
+            let i = 0;
+            let j = 0;
+            while ((j = lines.indexOf(char, i)) !== -1) {
                 console.log(lines[i])
-                codeLine = String.prototype.toLowerCase(lines[i])
+                codeLine = String.prototype.toLowerCase(input.substring(i,j))
                 console.log(codeLine)
                 args = codeLine.split(":")
             }
     });
-    document.getElementById("instruction").innerText = codeLine
-    while (true) {
+    while (typeof args != undefined && typeof codeLine != undefined) {
+        document.getElementById("instruction").innerText = codeLine;
+        await new Promise(r => setTimeout(r, getRandomNumber(500,1000)));
         if (args[0] == "h") {
             if (snaOldKey == snaCurrentKey && snaCurrentKey == args[1]) {
                 //do nothing for now...
@@ -138,5 +146,8 @@ async function streamLevel(week) {
         } else {
             console.log(`UNKNOWN COMMAND ${codeLine}`)
         }
+        await new Promise(r => setTimeout(r, 100));
     }
 }
+
+streamLevel(getWeek());
