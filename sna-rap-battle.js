@@ -127,7 +127,7 @@ async function streamLevel(week) {
                 gameOver();
             }
             } else if (args[0] == "wait" || args[0] == "sleep") {
-                await new Promise(r => setTimeout(r, Number(args[1]) * 1000));
+                setTimeout(r, Number(args[1]) * 1000)
             } else if (args[0] == "v") {
                 var audV = new Audio(`${getAudio(true)}`);
                 audV.addEventListener("canplay", evt => { audV.play(); }); 
