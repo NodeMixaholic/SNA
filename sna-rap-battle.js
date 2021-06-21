@@ -10,7 +10,7 @@ async function waitA(s) {
 }
 
 function wait(s) {
-    waitA().then(result => console.log(result)));
+    waitA().then(result => console.log(result));
 }
 
 function getWeek() {
