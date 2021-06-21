@@ -29,9 +29,9 @@ function runTrolleyProblem() {
   let trackToSave = getTrackToSave(); //Save a variable storing our track to save. Keep in mind that 0 is both, 1 and 2 are their coresponding tracks.
   //Output our answer, with a little bit of logic.
   if (trackToSave > 0) {
-    console.log(`Track 1 has ${track1} people,while track 2 has ${track2} people. Prefer to save track ${trackToSave}`)
+    console.log(`Track 1 has ${track1} people, while track 2 has ${track2} people. Prefer to save track ${trackToSave}.`)
   } else {
-    console.log(`Track 1 has ${track1} people,while track 2 has ${track2} people. Both tracks are equal so it doesn't really matter which one you save, with little exception.`)
+    console.log(`Track 1 has ${track1} people, while track 2 has ${track2} people. Both tracks are equal so it doesn't really matter which one you save, with little exception.`)
   }
 }
 
