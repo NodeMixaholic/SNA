@@ -4,6 +4,15 @@ var snaOldKey = "n/a"
 var snaLevelCurrentKey;
 const urlParams = window.location.search;
 const urlParamsObject = new URLSearchParams(urlParams);
+
+async function waitA(s) {
+    await new Promise(resolve => setTimeout(resolve, s * 1000));
+}
+
+function wait(s) {
+    waitA().then(result => console.log(result)));
+}
+
 function getWeek() {
     if (typeof urlParamsObject.get("week") != 'undefined' && urlParamsObject.get("week") != null) {
         return urlParamsObject.get("week");
@@ -117,7 +126,7 @@ function gameOver() {
 async function streamLevel(week) {
     let args;
     let codeLine;
-    function checkForLevelInstruction() {
+    async function checkForLevelInstruction() {
         if (typeof args != undefined && typeof codeLine != undefined) {
             document.getElementById("instruction").innerText = codeLine;
             if (args[0] == "h") {
@@ -127,7 +136,7 @@ async function streamLevel(week) {
                 gameOver();
             }
             } else if (args[0] == "wait" || args[0] == "sleep") {
-                setTimeout(r, Number(args[1]) * 1000)
+                await wait(args[1]);
             } else if (args[0] == "v") {
                 var audV = new Audio(`${getAudio(true)}`);
                 audV.addEventListener("canplay", evt => { audV.play(); }); 
@@ -148,7 +157,7 @@ async function streamLevel(week) {
                 codeLine = String.prototype.toLowerCase(lines.substring(i,j))
                 console.log(codeLine)
                 args = codeLine.split(":")
-                setTimeout(console.log("time up lol"), 1000)
+                wait(1)
                 checkForLevelInstruction();
             }
             
